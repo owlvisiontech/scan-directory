@@ -34,7 +34,7 @@ runs:
         DIRS_JSON=""
         DIRS_JSON=`echo -e "$DIRS_JSON{\n"`
         DIRS_JSON=`echo -e "$DIRS_JSON\n\t\"dirs\"=["`
-        echo "uploading $PATH_PREFIX"
+        echo "uploading $INPUT_PATH"
         for  dir  in  $(ls  $PATH_PREFIX)
         do
           if [ -d $PATH_PREFIX/$dir ];then

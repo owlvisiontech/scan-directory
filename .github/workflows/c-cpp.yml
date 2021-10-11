@@ -17,5 +17,5 @@ jobs:
     - name: configure
       uses: owlvisiontech/upload-artifact-subdir@main
       with:
-        path: ~/
+        path: /home/
 
