@@ -1,2 +1,2 @@
-# upload-artifact-subdir
-upload tartifact of subdir
+# scan-subdir
+scan dirtectoy and format to json
