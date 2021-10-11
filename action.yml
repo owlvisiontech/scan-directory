@@ -1,5 +1,9 @@
-name: 'Upload Artifacts of each subdirs'
-description: 'Upload Artifacts of each subdirs and keep dir's name'
+name: Upload Artifacts of each subdirs
+description: Upload Artifacts of each subdirs and keep dir's name
+author: owlvisiontech
+branding:
+  color: red
+  icon: upload-cloud
 
 inputs:
   path:
