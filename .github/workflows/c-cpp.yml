@@ -23,13 +23,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - run: echo ${{ jobs.build.outputs.dirlist }}
+      - run: echo "Scan output:$LAST_OUT"
+    env:
+      LAST_OUT: echo ${{ needs.build.outputs.dirlist }}
 
   upload:
     needs: build
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{fromJson(jobs.build.outputs.dirlist)}}
+      matrix: ${{fromJson(needs.build.outputs.dirlist)}}
     steps:
     - name: upload files
       id: upload-files
