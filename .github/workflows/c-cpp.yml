@@ -39,9 +39,11 @@ jobs:
     strategy:
       matrix: ${{fromJson(needs.build.outputs.dirlist)}}
     steps:
+    - name: show
+      run: echo ---> ${{ matrix.name }} ${{ matrix.path }}
     - name: upload files
       id: upload-files
       uses: actions/upload-artifact@v2
       with:
         name: ${{ matrix.name }}
-        path: /tmp/
+        path: ${{ matrix.path }}
