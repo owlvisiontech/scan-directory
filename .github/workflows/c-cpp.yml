@@ -43,5 +43,5 @@ jobs:
       id: upload-files
       uses: actions/upload-artifact@v2
       with:
-        name: my-artifact ${{ matrix.name }}
-        path: ${{ matrix.path }}
+        name: ${{ matrix.name }}
+        path: /tmp/
