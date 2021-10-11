@@ -36,7 +36,7 @@ runs:
   steps:
     - id: scan_dirs
       run : |
-        PATH_PREFIX=/home/owlvtech
+        PATH_PREFIX=$INPUT_PATH
         DIRS_JSON=`echo -e "$DIRS_JSON{"`
         DIRS_JSON=`echo -e "$DIRS_JSON\"dirs\":["`
 
