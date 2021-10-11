@@ -39,10 +39,11 @@ runs:
         do
           if [ -d $PATH_PREFIX/$dir ];then
             echo  $dir
-            DIRS_JSON=`echo -e "$DIRS_JSON$dir,\n"`
+            DIRS_JSON=`echo -e "$PATH_PREFIX/$DIRS_JSON$dir,\n"`
           fi
         done
 
+        ${DIRS_JSON%?}=$DIRS_JSON
         DIRS_JSON=`echo -e "$DIRS_JSON]"`
         DIRS_JSON=`echo -e "$DIRS_JSON}"`
         echo $DIRS_JSON
