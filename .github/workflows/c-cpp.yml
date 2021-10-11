@@ -21,6 +21,8 @@ jobs:
         path: /home/
     - run: echo dirlist ${{ steps.scan-dirs.outputs.dirlist }} 
       shell: bash
+    outputs:
+     dirlist:  ${{ steps.scan-dirs.outputs.dirlist }} 
 
   check:
     runs-on: ubuntu-latest
