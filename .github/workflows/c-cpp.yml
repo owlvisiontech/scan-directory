@@ -40,7 +40,9 @@ jobs:
       matrix: ${{fromJson(needs.build.outputs.dirlist)}}
     steps:
     - name: show
-      run: echo ---> ${{ matrix.name }} ${{ matrix.path }}
+      run: echo "-----${{ matrix.name }} ${{ matrix.path }}"
+      shell: bash
+
     - name: upload files
       id: upload-files
       uses: actions/upload-artifact@v2
