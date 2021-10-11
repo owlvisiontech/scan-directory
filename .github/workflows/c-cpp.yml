@@ -19,7 +19,7 @@ jobs:
       uses: owlvisiontech/upload-artifact-subdir@main
       with:
         path: /home/
-      run: echo dirlist ${{ steps.scan-dirs.outputs.dirlist }} 
+    - run: echo dirlist ${{ steps.scan-dirs.outputs.dirlist }} 
       shell: bash
 
   check:
