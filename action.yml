@@ -44,8 +44,7 @@ runs:
         do
             if [ -d $PATH_PREFIX/$dir ];then
                 echo  $dir
-                DIRS_JSON=`echo -e "$DIRS_JSON\
-                    {\"name\":\"$dir\",\"path\":\"$PATH_PREFIX/$dir\"},\n"`
+                DIRS_JSON=`echo -e "$DIRS_JSON{\"name\":\"$dir\",\"path\":\"$PATH_PREFIX/$dir\"},\n"`
             fi
         done
 
