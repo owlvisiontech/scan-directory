@@ -19,6 +19,12 @@ jobs:
       with:
         path: /home/
 
+  check:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - run: echo ${{ needs.build.outputs.dirlist }}
+
   upload:
     needs: build
     runs-on: ubuntu-latest
