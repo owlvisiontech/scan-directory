@@ -47,6 +47,8 @@ runs:
         DIRS_JSON=`echo -e "$DIRS_JSON}"`
         echo $DIRS_JSON
       shell: 'bash'
+      env:
+        INPUT_PATH: ${{ inputs.name }}
 
     - uses: actions/upload-artifact@v2
       with:
