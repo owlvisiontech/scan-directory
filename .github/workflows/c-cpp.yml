@@ -15,9 +15,12 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: configure
+      id: scan-dirs
       uses: owlvisiontech/upload-artifact-subdir@main
       with:
         path: /home/
+      run: echo dirlist ${{ steps.scan-dirs.outputs.dirlist }} 
+      shell: bash
 
   check:
     runs-on: ubuntu-latest
