@@ -18,7 +18,7 @@ jobs:
       id: scan-dirs
       uses: owlvisiontech/upload-artifact-subdir@main
       with:
-        path: /home
+        path: /tmp
     - run: echo dirlist ${{ steps.scan-dirs.outputs.dirlist }} 
       shell: bash
     outputs:
@@ -47,5 +47,5 @@ jobs:
       id: upload-files
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ matrix.dris.name }}
+        name: ${{ matrix.dirs.name }}
         path: ${{ matrix.dirs.path }}
