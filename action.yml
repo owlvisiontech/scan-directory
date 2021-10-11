@@ -1,0 +1,58 @@
+name: 'Upload Artifacts of each subdirs'
+description: 'Upload Artifacts of each subdirs and keep dir's name'
+
+inputs:
+  path:
+    description: >
+      A directory or wildcard pattern that describes what to upload.
+    required: true
+  if-no-files-found:
+    description: >
+      The desired behavior if no files are found using the provided path.
+      Available Options:
+        warn: Output a warning but do not fail the action
+        error: Fail the action with an error message
+        ignore: Do not output any warnings or errors, the action does not fail
+    default: 'warn'
+    required: false
+  retention-days:
+    description: >
+      Duration after which artifact will expire in days. 0 means using default retention.
+      Minimum 1 day.
+      Maximum 90 days unless changed from the repository settings page.
+    required: false
+
+runs:
+  using: 'composite'
+  steps:
+    - run : |
+        PATH_PREFIX=/home/owlvtech
+        DIRS_JSON=""
+        DIRS_JSON=`echo -e "$DIRS_JSON{\n"`
+        DIRS_JSON=`echo -e "$DIRS_JSON\n\t\"dirs\"=["`
+        for  dir  in  $(ls  $PATH_PREFIX)
+        do
+          if [ -d $PATH_PREFIX/$dir ];then
+            echo  $dir
+            DIRS_JSON=`echo -e "$DIRS_JSON$dir,\n"`
+          fi
+        done
+
+        DIRS_JSON=`echo -e "$DIRS_JSON]"`
+        DIRS_JSON=`echo -e "$DIRS_JSON}"`
+        echo $DIRS_JSON
+      shell: 'bash'
+
+
+    - run: tar -cvf artifact.tar ${{ inputs.path }}
+      shell: 'bash'
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ${{ inputs.name }}
+        path: artifact.tar
+        if-no-files-found: ${{ inputs.if-no-files-found }}
+        retention-days: ${{ inputs.retention-days }}
+
+    - run: rm artifact.tar
+      shell: 'bash'
