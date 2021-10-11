@@ -19,3 +19,18 @@ jobs:
       with:
         path: /home/
 
+  upload:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{fromJson(needs.build.outputs.dirlist)}}
+    steps:
+    - name: upload files
+      id: upload-files
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.name }}
+        path: ${{ matrix.path }}
+        if-no-files-found: ${{ inputs.if-no-files-found }}
+        retention-days: ${{ inputs.retention-days }}
+

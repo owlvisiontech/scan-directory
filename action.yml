@@ -26,38 +26,47 @@ inputs:
       Maximum 90 days unless changed from the repository settings page.
     required: false
 
+outputs:
+  dirlist:
+    description: "directory list in json"
+    value: ${{ steps.scan_dirs.outputs.dirlist }}
+
 runs:
   using: 'composite'
   steps:
-    - run : |
-        PATH_PREFIX=$INPUT_PATH
-        DIRS_JSON=""
-        DIRS_JSON=`echo -e "$DIRS_JSON{\n"`
-        DIRS_JSON=`echo -e "$DIRS_JSON\n\t\"dirs\":["`
-        echo "uploading $INPUT_PATH"
+    - id: scan_dirs
+      run : |
+        PATH_PREFIX=/home/owlvtech
+        DIRS_JSON=`echo -e "$DIRS_JSON{"`
+        DIRS_JSON=`echo -e "$DIRS_JSON\"dirs\":["`
+
         for  dir  in  $(ls  $PATH_PREFIX)
         do
-          if [ -d $PATH_PREFIX/$dir ];then
-            echo  $dir
-            DIRS_JSON=`echo -e "$DIRS_JSON\"$PATH_PREFIX/$dir\",\n"`
-          fi
+            if [ -d $PATH_PREFIX/$dir ];then
+                echo  $dir
+                DIRS_JSON=`echo -e "$DIRS_JSON\
+                    {\"name\":\"$dir\",\"path\":\"$PATH_PREFIX/$dir\"},\n"`
+            fi
         done
 
         DIRS_JSON=`echo ${DIRS_JSON%?}`
         DIRS_JSON=`echo -e "$DIRS_JSON]"`
         DIRS_JSON=`echo -e "$DIRS_JSON}"`
+
         echo $DIRS_JSON > /tmp/dirs.json
         cat /tmp/dirs.json
+        run: echo "::set-output name=dirlist::$(echo $DIRS_JSON)"
       shell: 'bash'
       env:
         INPUT_PATH: ${{ inputs.path }}
 
-    - uses: actions/upload-artifact@v2
-      with:
-        name: ${{ inputs.path }}
-        path: artifact.tar
-        if-no-files-found: ${{ inputs.if-no-files-found }}
-        retention-days: ${{ inputs.retention-days }}
+    #- id: upload-files
+    #  uses: actions/upload-artifact@v2
+    #  with:
+    #    name: ${{ inputs.path }}
+    #    path: artifact.tar
+    #    if-no-files-found: ${{ inputs.if-no-files-found }}
+    #    retention-days: ${{ inputs.retention-days }}
 
-    - run: rm artifact.tar
-      shell: 'bash'
+    #- run: rm artifact.tar
+    #  shell: 'bash'
