@@ -48,11 +48,11 @@ runs:
         echo $DIRS_JSON
       shell: 'bash'
       env:
-        INPUT_PATH: ${{ inputs.name }}
+        INPUT_PATH: ${{ inputs.path }}
 
     - uses: actions/upload-artifact@v2
       with:
-        name: ${{ inputs.name }}
+        name: ${{ inputs.path }}
         path: artifact.tar
         if-no-files-found: ${{ inputs.if-no-files-found }}
         retention-days: ${{ inputs.retention-days }}
