@@ -1,5 +1,5 @@
-name: Upload Artifacts of each subdirs
-description: Upload Artifacts of each subdirs and keep dir's name
+name: scan directory
+description: scan directory and format list to json 
 author: owlvisiontech
 branding:
   color: red
@@ -18,12 +18,6 @@ inputs:
         error: Fail the action with an error message
         ignore: Do not output any warnings or errors, the action does not fail
     default: 'warn'
-    required: false
-  retention-days:
-    description: >
-      Duration after which artifact will expire in days. 0 means using default retention.
-      Minimum 1 day.
-      Maximum 90 days unless changed from the repository settings page.
     required: false
 
 outputs:
@@ -57,14 +51,3 @@ runs:
       shell: 'bash'
       env:
         INPUT_PATH: ${{ inputs.path }}
-
-    #- id: upload-files
-    #  uses: actions/upload-artifact@v2
-    #  with:
-    #    name: ${{ inputs.path }}
-    #    path: artifact.tar
-    #    if-no-files-found: ${{ inputs.if-no-files-found }}
-    #    retention-days: ${{ inputs.retention-days }}
-
-    #- run: rm artifact.tar
-    #  shell: 'bash'
