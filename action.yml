@@ -29,12 +29,12 @@ inputs:
 outputs:
   dirlist:
     description: "directory list in json"
-    value: ${{ steps.scan_dirs.outputs.dirlist }}
+    value: ${{ steps.scan-dirs.outputs.dirlist }}
 
 runs:
   using: 'composite'
   steps:
-    - id: scan_dirs
+    - id: scan-dirs
       run : |
         PATH_PREFIX=$INPUT_PATH
         DIRS_JSON=`echo -e "$DIRS_JSON{"`
@@ -52,8 +52,7 @@ runs:
         DIRS_JSON=`echo -e "$DIRS_JSON]"`
         DIRS_JSON=`echo -e "$DIRS_JSON}"`
 
-        echo $DIRS_JSON > /tmp/dirs.json
-        cat /tmp/dirs.json
+        cat $DIRS_JSON
         echo "::set-output name=dirlist::$(echo $DIRS_JSON)"
       shell: 'bash'
       env:
