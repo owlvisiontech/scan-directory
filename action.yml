@@ -33,20 +33,21 @@ runs:
         PATH_PREFIX=$INPUT_PATH
         DIRS_JSON=""
         DIRS_JSON=`echo -e "$DIRS_JSON{\n"`
-        DIRS_JSON=`echo -e "$DIRS_JSON\n\t\"dirs\"=["`
+        DIRS_JSON=`echo -e "$DIRS_JSON\n\t\"dirs\":["`
         echo "uploading $INPUT_PATH"
         for  dir  in  $(ls  $PATH_PREFIX)
         do
           if [ -d $PATH_PREFIX/$dir ];then
             echo  $dir
-            DIRS_JSON=`echo -e "$PATH_PREFIX/$DIRS_JSON$dir,\n"`
+            DIRS_JSON=`echo -e "$DIRS_JSON\"$PATH_PREFIX/$dir\",\n"`
           fi
         done
 
-        ${DIRS_JSON%?}=$DIRS_JSON
+        DIRS_JSON=`echo ${DIRS_JSON%?}`
         DIRS_JSON=`echo -e "$DIRS_JSON]"`
         DIRS_JSON=`echo -e "$DIRS_JSON}"`
-        echo $DIRS_JSON
+        echo $DIRS_JSON > /tmp/dirs.json
+        cat /tmp/dirs.json
       shell: 'bash'
       env:
         INPUT_PATH: ${{ inputs.path }}
