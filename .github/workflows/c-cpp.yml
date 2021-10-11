@@ -16,7 +16,7 @@ jobs:
 
     - name: configure
       id: scan-dirs
-      uses: owlvisiontech/upload-artifact-subdir@main
+      uses: owlvisiontech/scan-directory@main
       with:
         path: /tmp
     - run: echo dirlist ${{ steps.scan-dirs.outputs.dirlist }} 
