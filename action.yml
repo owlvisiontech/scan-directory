@@ -55,7 +55,7 @@ runs:
 
         echo $DIRS_JSON > /tmp/dirs.json
         cat /tmp/dirs.json
-        run: echo "::set-output name=dirlist::$(echo $DIRS_JSON)"
+        echo "::set-output name=dirlist::$(echo $DIRS_JSON)"
       shell: 'bash'
       env:
         INPUT_PATH: ${{ inputs.path }}
